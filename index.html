@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Styled Name Initial Matchmaker</title>
+  <!-- GSAP CDN for advanced animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    /* CSS Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #F2F2F2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      background-color: #fff;
+      width: 400px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    h1 {
+      font-size: 24px;
+      color: #111;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+    input:focus {
+      border-color: #FF9900;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #FF9900;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    button:hover {
+      background-color: #e68a00;
+      transform: scale(1.05);
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <h1>Name Initial Matchmaker</h1>
+    <p>Enter your name to discover your GF/BF's initial letter</p>
+    <input type="text" id="nameInput" placeholder="Enter the first letter of your name" />
+    <button onclick="findMatch()">Find Your Match</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    // Animate container entry using GSAP
+    gsap.to("#container", { duration: 1, opacity: 1, y: 0, ease: "power2.out" });
+
+    function findMatch() {
+      const nameInput = document.getElementById('nameInput').value.trim();
+      const resultDiv = document.getElementById('result');
+
+      if (nameInput === '') {
+        resultDiv.innerHTML = 'Please enter a valid name.';
+        gsap.fromTo("#result", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+        return;
+      }
+
+      const firstChar = nameInput.charAt(0).toUpperCase();
+      let matchChar;
+
+      // Specific rule: if first letter is 'N' output 'S', and vice versa.
+      if (firstChar === 'N') {
+        matchChar = 'S';
+      } else if (firstChar === 'S') {
+        matchChar = 'N';
+      } else {
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const randomIndex = Math.floor(Math.random() * alphabet.length);
+        matchChar = alphabet.charAt(randomIndex);
+      }
+
+      resultDiv.innerHTML = `Your GF/BF's name starts with: ${matchChar}`;
+      gsap.fromTo("#result", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: "bounce.out" });
+    }
+  </script>
+</body>
+</html
